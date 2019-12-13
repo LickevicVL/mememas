@@ -1,3 +1,7 @@
 from django.contrib import admin
+from memes.models import Mem
 
-# Register your models here.
+
+@admin.register(Mem)
+class MemAdmin(admin.ModelAdmin):
+    exclude = ('slug',)

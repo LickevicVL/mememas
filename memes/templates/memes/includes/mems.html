@@ -1,0 +1,12 @@
+{% for mem in mems %}
+    <div class="col mb-4">
+        <div class="card text-white bg-dark">
+            <img src="{{ mem.url }}" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">{{ mem.title }}</h5>
+                <p class="card-text">{{ mem.body|truncatewords:10 }}</p>
+                <p class="card-text"><small class="text-muted">Created {{ mem.get_created_at }}</small></p>
+            </div>
+        </div>
+    </div>
+{% endfor %}

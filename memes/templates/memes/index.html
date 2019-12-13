@@ -14,53 +14,50 @@
             cursor: pointer;
             box-shadow: 10px 10px 10px grey;
         }
+        .spinner {
+            text-align: center;
+            display: none;
+
+        }
     </style>
 {% endblock %}
 
 {% block body %}
-    <div class="row row-cols-1 row-cols-3">
-        <div class="col mb-4">
-            <div class="card text-white bg-dark">
-                <img src="http://pics.wikireality.ru/upload/thumb/9/9f/SHon-Bin.jpg/300px-SHon-Bin.jpg" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col mb-4">
-            <div class="card text-white bg-dark">
-                <img src="https://img.anews.com/media/gallery/120684793/143142367.jpg" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col mb-4">
-            <div class="card text-white bg-dark">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSNmyluP45my3ux2utVAsm1_L9fhVU7TJYcpArWb0WVN0VcjWXH" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col mb-4">
-            <div class="card text-white bg-dark">
-                <img src="https://cs9.pikabu.ru/post_img/big/2017/05/27/5/1495865592134668945.jpg" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                </div>
-            </div>
-        </div>
+    <div class="row row-cols-1 row-cols-3" id="mems">
+        {% include 'memes/includes/mems.html' %}
     </div>
+    <div id="spinner" class="spinner">
+        {% for i in '123' %}
+        <div class="spinner-grow" role="status">
+            <span class="sr-only"></span>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        let page = 1;
+        let pages = {{ pages }}
+
+        window.onscroll = function() {
+            if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight && page < pages) {
+                page++;
+
+                let spinner = document.getElementById('spinner');
+                spinner.style.display = 'block';
+
+                let mems = document.getElementById('mems');
+
+                let request = new XMLHttpRequest();
+                request.open('GET', '{% url 'memes:index' %}' + '?page=' + page.toString());
+                request.send();
+                request.onload = function () {
+                    mems.innerHTML += request.responseText;
+                    spinner.style.display = 'none'
+                }
+
+            }
+        };
+    </script>
 {% endblock %}
