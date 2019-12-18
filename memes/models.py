@@ -1,6 +1,7 @@
 from time import time
 
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 
 from memes.utils import TimeAgo
@@ -24,3 +25,6 @@ class Mem(models.Model):
             self.slug = slugify(self.title.lower()) + str(int(time()))
 
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('memes:mem', kwargs={'slug': self.slug})
