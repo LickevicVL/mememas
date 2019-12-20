@@ -129,3 +129,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# Custom Settings
+NUMBER_PER_PAGE = 6

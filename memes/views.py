@@ -1,61 +1,21 @@
-from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 
 from memes.forms import MemForm
+from memes.mixins import ListObjectsMixin
 from memes.models import Mem, Movie
 
 
-class ListMems(View):
-    def get(self, request):
-        mems = Mem.objects.all().order_by('-created_at')
-
-        paginator = Paginator(mems, 6)
-        page = int(request.GET.get('page', 1))
-
-        if page > 1:
-            return render(
-                request,
-                'memes/includes/mems.html',
-                context={
-                    'mems': paginator.get_page(page)
-                }
-            )
-
-        return render(
-            request,
-            'memes/index.html',
-            context={
-                'mems': paginator.get_page(page),
-                'pages': paginator.num_pages
-            }
-        )
+class ListMems(ListObjectsMixin, View):
+    model = Mem
+    template_name = 'memes/index.html'
+    template_include = 'memes/include/mems.html'
 
 
-class ListMovies(View):
-    def get(self, request):
-        movies = Movie.objects.all().order_by('-created_at')
-
-        paginator = Paginator(movies, 10)
-        page = int(request.GET.get('page', 1))
-
-        if page > 1:
-            return render(
-                request,
-                'memes/includes/movies.html',
-                context={
-                    'movies': paginator.get_page(page)
-                }
-            )
-
-        return render(
-            request,
-            'memes/movies.html',
-            context={
-                'movies': paginator.get_page(page),
-                'pages': paginator.num_pages
-            }
-        )
+class ListMovies(ListObjectsMixin, View):
+    model = Movie
+    template_name = 'memes/movies.html'
+    template_include = 'memes/include/movies.html'
 
 
 class ViewMem(View):
