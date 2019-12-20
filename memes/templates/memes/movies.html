@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row row-cols-1 row-cols-3" id="mems">
-        {% include 'memes/includes/mems.html' %}
+    <div class="row row-cols-1 row-cols-2" id="movies">
+        {% include 'memes/includes/movies.html' %}
     </div>
     <div id="spinner" class="spinner">
         {% for i in '123' %}
@@ -19,6 +19,6 @@
 
 {% block script %}
     <script>
-        window.onscroll = memScroll('{% url 'memes:index' %}', {{ pages }}, 'mems')
+        window.onscroll = memScroll('{% url 'memes:movies' %}', {{ pages }}, 'movies')
     </script>
 {% endblock %}

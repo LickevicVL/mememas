@@ -1,0 +1,11 @@
+{% for movie in movies %}
+    <div class="col mb-4">
+        <div class="card text-white bg-danger">
+            <iframe class="main-content" src="{{ movie.url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="card-body">
+                <h5 class="card-title">{{ movie.title|title }}</h5>
+                <p class="card-text"><small class="text-muted">Created {{ movie.get_created_at }}</small></p>
+            </div>
+        </div>
+    </div>
+{% endfor %}
