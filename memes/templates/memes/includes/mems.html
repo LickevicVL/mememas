@@ -1,11 +1,22 @@
+{% load image_filters %}
+{% load static %}
+
 {% for mem in mems %}
-    <a href="{{ mem.get_absolute_url }}">
+    <a href="{{ mem.get_absolute_url }}" class="a-card">
         <div class="col mb-4">
             <div class="card text-white bg-dark">
-                <img src="{{ mem.url }}" class="card-img-top">
+                {% if mem.image|is_exists %}
+                    <img src="{{ mem.image.read|make_src }}" class="card-img-top main-img">
+                {% else %}
+                    <img src="{% static 'memes/image/not_found.png' %}" class="card-img-top main-img">
+                {% endif %}
                 <div class="card-body">
-                    <h5 class="card-title">{{ mem.title }}</h5>
-                    <p class="card-text">{{ mem.body|truncatewords:10 }}</p>
+                    <h5 class="card-title">{{ mem.title|title }}</h5>
+                    {% if mem.body %}
+                        <p class="card-text">{{ mem.body|truncatechars:40|title }}</p>
+                    {% else %}
+                        <p style="color: grey">No body</p>
+                    {% endif %}
                     <p class="card-text"><small class="text-muted">Created {{ mem.get_created_at }}</small></p>
                 </div>
             </div>

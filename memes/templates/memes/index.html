@@ -4,27 +4,6 @@
     Posts - {{ block.super }}
 {% endblock %}
 
-{% block style %}
-    <style>
-        img {
-            height: 400px;
-            width: 400px;
-        }
-        .card:hover {
-            cursor: pointer;
-            box-shadow: 10px 10px 10px grey;
-        }
-        .spinner {
-            text-align: center;
-            display: none;
-
-        }
-        a {
-            text-decoration: none !important;
-        }
-    </style>
-{% endblock %}
-
 {% block body %}
     <div class="row row-cols-1 row-cols-3" id="mems">
         {% include 'memes/includes/mems.html' %}
@@ -40,27 +19,6 @@
 
 {% block script %}
     <script>
-        let page = 1;
-        let pages = {{ pages }}
-
-        window.onscroll = function() {
-            if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight && page < pages) {
-                page++;
-
-                let spinner = document.getElementById('spinner');
-                spinner.style.display = 'block';
-
-                let mems = document.getElementById('mems');
-
-                let request = new XMLHttpRequest();
-                request.open('GET', '{% url 'memes:index' %}' + '?page=' + page.toString());
-                request.send();
-                request.onload = function () {
-                    mems.innerHTML += request.responseText;
-                    spinner.style.display = 'none'
-                }
-
-            }
-        };
+        window.onscroll = memScroll('{% url 'memes:index' %}', {{ pages }})
     </script>
 {% endblock %}

@@ -42,7 +42,8 @@ def view_mem(request, slug):
 
 def create_mem(request):
     if request.method == 'POST':
-        form = MemForm(request.POST)
+        print('files', request.FILES)
+        form = MemForm(request.POST, request.FILES)
 
         if form.is_valid():
             mem = form.save()

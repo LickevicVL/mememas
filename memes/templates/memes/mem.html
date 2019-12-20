@@ -1,5 +1,8 @@
 {% extends 'memes/base.html' %}
 
+{% load image_filters %}
+{% load static %}
+
 {% block title %}
     Mem - {{ block.super }}
 {% endblock %}
@@ -7,7 +10,11 @@
 
 {% block body %}
     <div class="card text-white bg-dark">
-        <img src="{{ mem.url }}" class="card-img-top">
+        {% if mem.image|is_exists %}
+            <img src="{{ mem.image.read|make_src }}" class="card-img-top">
+        {% else %}
+            <img src="{% static 'memes/image/not_found.png' %}" class="card-img-top">
+        {% endif %}
         <div class="card-body">
             <h5 class="card-title">{{ mem.title }}</h5>
             <p class="card-text">{{ mem.body }}</p>
