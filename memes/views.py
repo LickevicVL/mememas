@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 
@@ -31,7 +32,9 @@ class ViewMem(View):
         )
 
 
-class CreateMem(View):
+class CreateMem(LoginRequiredMixin, View):
+    raise_exception = True
+
     def get(self, request):
         form = MemForm()
 

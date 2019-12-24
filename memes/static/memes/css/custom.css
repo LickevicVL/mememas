@@ -23,3 +23,13 @@
 .a-card {
     text-decoration: none !important;
 }
+
+.search-field {
+    margin: auto;
+}
+
+.user-info {
+    font-weight: bold;
+    color: rgb(220, 53, 69);
+    margin-right: 20px;
+}
