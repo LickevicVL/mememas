@@ -1,0 +1,26 @@
+{% if messages %}
+    {% for message in messages %}
+        {% if message.extra_tags == type %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% csrf_token %}
+
+{% if form.errors %}
+    <div class="alert alert-danger">
+        {{ form.errors }}
+    </div>
+{% endif %}
+{% for field in form %}
+    <div class="form-group">
+        {{ field.label }}:
+        {{ field }}
+    </div>
+{% endfor %}
