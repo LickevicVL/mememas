@@ -24,3 +24,14 @@ class MemForm(forms.ModelForm):
             raise ValidationError('Title must contain "mem".')
 
         return title
+
+
+class CommentForm(forms.Form):
+    body = forms.CharField(
+        widget=forms.Textarea(attrs={'class': 'form-control'}),
+        required=True
+    )
+
+    def save(self, mem, user):
+        body = self.cleaned_data['body']
+        mem.comments.create(body=body, user=user)

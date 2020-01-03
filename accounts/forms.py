@@ -17,7 +17,12 @@ class MemUserCreationForm(UserCreationForm):
 
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control'})
+            'email': forms.EmailInput(
+                attrs={
+                    'class': 'form-control',
+                    'required': 'required'
+                }
+            )
         }
 
     def __init__(self, *args, **kwargs):

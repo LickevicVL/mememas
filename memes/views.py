@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 
-from memes.forms import MemForm
+from memes.forms import MemForm, CommentForm
 from memes.mixins import ListObjectsMixin
 from memes.models import Mem, Movie
 
@@ -27,7 +27,8 @@ class ViewMem(View):
             request,
             'memes/mem.html',
             context={
-                'mem': mem
+                'mem': mem,
+                'form': CommentForm()
             }
         )
 
@@ -62,3 +63,16 @@ class CreateMem(LoginRequiredMixin, View):
                 'form': form
             }
         )
+
+
+class CreateComment(LoginRequiredMixin, View):
+    raise_exception = True
+
+    def post(self, request, slug):
+        mem = get_object_or_404(Mem, slug=slug)
+
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form.save(mem, request.user)
+
+        return redirect(mem)

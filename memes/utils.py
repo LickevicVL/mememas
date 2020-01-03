@@ -6,6 +6,9 @@ HOUR = MINUTE * 60
 DAY = HOUR * 24
 YEAR = DAY * 365
 
+NEW = 'new'
+HOT = 'hot'
+
 
 class TimeAgo:
     NOW = 'just now'

@@ -21,4 +21,19 @@
             <p class="card-text"><small class="text-muted">Created {{ mem.get_created_at }}</small></p>
         </div>
     </div>
+
+    {% include 'memes/includes/comments.html' %}
+
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'memes:comment' slug=mem.slug %}">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    {{ field }}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-success">Add comment</button>
+        </form>
+    {% endif %}
+
 {% endblock %}

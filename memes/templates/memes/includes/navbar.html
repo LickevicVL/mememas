@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Mememas</a>
+    <a class="navbar-brand">Mememas</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -7,10 +7,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">New<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{% url 'memes:index' %}">New<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-               <a class="nav-link" href="#">Hot<span class="sr-only">(current)</span></a>
+               <a class="nav-link" href="{% url 'memes:hot' %}">Hot<span class="sr-only">(current)</span></a>
             </li>
             {% if user.is_authenticated %}
                 <li class="nav-item active">
@@ -23,8 +23,8 @@
                 {% endif %}
             {% endif %}
         </ul>
-        <form class="form-inline my-2 my-lg-0 search-field">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="form-inline my-2 my-lg-0 search-field" method="get">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search" value="{{ request.GET.search }}">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
 

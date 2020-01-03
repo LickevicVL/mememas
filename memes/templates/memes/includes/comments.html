@@ -1,0 +1,17 @@
+<div class="card">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link active">Comments</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        {% for comment in mem.comments.all %}
+            <h5 class="card-title">{{ comment.user.email }}</h5>
+            <p class="card-text">{{ comment.body }}</p>
+            <p class="card-text"><small class="text-muted">{{ comment.get_created_at }}</small></p>
+            <hr/>
+        {% endfor %}
+    </div>
+</div>
