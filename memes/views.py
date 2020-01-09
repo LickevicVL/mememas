@@ -10,13 +10,13 @@ from memes.models import Mem, Movie
 class ListMems(ListObjectsMixin, View):
     model = Mem
     template_name = 'memes/index.html'
-    template_include = 'memes/include/mems.html'
+    template_include = 'memes/includes/mems.html'
 
 
 class ListMovies(ListObjectsMixin, View):
     model = Movie
     template_name = 'memes/movies.html'
-    template_include = 'memes/include/movies.html'
+    template_include = 'memes/includes/movies.html'
 
 
 class ViewMem(View):
