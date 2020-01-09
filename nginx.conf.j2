@@ -1,0 +1,42 @@
+
+worker_processes auto;
+
+events {
+    use epoll;
+    worker_connections 1024;
+    multi_accept on;
+}
+
+http {
+
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+    client_max_body_size 100M;
+
+    access_log         /dev/stdout;
+    error_log          /dev/stdout;
+
+    server {
+        listen 80;
+        server_name mememas;
+
+        location / {
+            proxy_pass              http://{{ HOST }}:{{ PORT }};
+            proxy_set_header        Host                 $host;
+            proxy_set_header        X-Forwarded-Host     $host;
+            proxy_set_header        X-Real-IP            $remote_addr;
+
+        }
+
+        location /static/ {
+            alias /static/;
+        }
+
+        location /media/ {
+            alias /media/;
+        }
+
+        access_log         /dev/stdout;
+        error_log          /dev/stdout;
+    }
+}

@@ -6,7 +6,7 @@
         <div class="col mb-4">
             <div class="card text-white bg-dark">
                 {% if mem.image|is_exists %}
-                    <img src="{{ mem.image.read|make_src }}" class="card-img-top main-content">
+                    <img src="{{ mem.image.url }}" class="card-img-top main-content">
                 {% else %}
                     <img src="{% static 'memes/image/not_found.png' %}" class="card-img-top main-content">
                 {% endif %}

@@ -1,0 +1,62 @@
+version: "3"
+
+services:
+  posetgres:
+    image: postgres:latest
+    container_name: mememas-db
+    hostname: mememas-database
+    env_file:
+      - develop.env
+    restart: always
+    networks:
+      - mememas-network
+    expose:
+      - 5432
+  mememas:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    container_name: mememas
+    hostname: mememas
+    env_file:
+      - develop.env
+    environment:
+      DEBUG: "false"
+      PORT: 8000
+      DB_HOST: "mememas-db"
+    restart: always
+    networks:
+      - mememas-network
+    expose:
+      - 8000
+    ports:
+      - 8000:8000
+    depends_on:
+      - posetgres
+    volumes:
+      - "static:/var/app/mememas/static"
+      - "media:/var/app/mememas/media"
+  nginx:
+    build:
+      dockerfile: Dockerfile-nginx
+      context: .
+      args:
+        HOST: mememas
+        PORT: 8000
+    container_name: mememas-nginx
+    networks:
+      - mememas-network
+    ports:
+      - 80:80
+    restart: always
+    volumes:
+      - "static:/static"
+      - "media:/media"
+
+networks:
+  mememas-network:
+    driver: bridge
+
+volumes:
+  static:
+  media:

@@ -11,7 +11,7 @@
 {% block body %}
     <div class="card text-white bg-dark">
         {% if mem.image|is_exists %}
-            <img src="{{ mem.image.read|make_src }}" class="card-img-top">
+            <img src="{{ mem.image.url }}" class="card-img-top">
         {% else %}
             <img src="{% static 'memes/image/not_found.png' %}" class="card-img-top">
         {% endif %}

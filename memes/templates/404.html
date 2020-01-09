@@ -1,0 +1,11 @@
+{% extends 'memes/base.html' %}
+{% load static %}
+
+{% block body %}
+    <div id="header">
+        <a id="logo">404</a>
+    </div>
+    <div id="not-found">
+        <img src="{% static 'memes/image/404.gif' %}">
+    </div>
+{% endblock %}
